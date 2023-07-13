@@ -1,5 +1,8 @@
-import java.math.BigDecimal;
+import org.apache.commons.math3.util.Precision;
+
 import java.time.LocalDate;
+
+import static java.math.RoundingMode.HALF_DOWN;
 
 public class BankAccount {
 
@@ -57,5 +60,17 @@ public class BankAccount {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public void deposit(double depositAmount) {
+        this.balance += depositAmount;
+    }
+
+    public void withdraw(double withdrawAmount) {
+        this.balance -= withdrawAmount;
+    }
+
+    public void payInterest(double interestPercentage){
+        this.balance *= (1 + (interestPercentage / 100));
     }
 }
