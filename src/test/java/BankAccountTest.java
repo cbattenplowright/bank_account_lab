@@ -121,10 +121,7 @@ public class BankAccountTest {
     @Test
     public void canWithdraw() {
         bankAccount.setBalance(12345);
-        bankAccount.withdraw(10000);
-        double actual = bankAccount.getBalance();
-        double expected = 23.45;
-        assertThat(actual).isEqualTo(expected);
+        assertThat(bankAccount.withdraw(10000)).isEqualTo("Withdrawal successful you have 23.45 remaining in your account");
     }
 
 //    Interest test
@@ -147,10 +144,11 @@ public class BankAccountTest {
         double expected = 101;
     }
 
-//    @Test
-//    public void withdrawalDeclined() {
-//
-//    }
+    @Test
+    public void withdrawalDeclined() {
+        bankAccount.setBalance(10000);
+        assertThat(bankAccount.withdraw(120000)).isEqualTo("You have insufficient funds to make this withdrawal");
+    }
 
 
 }

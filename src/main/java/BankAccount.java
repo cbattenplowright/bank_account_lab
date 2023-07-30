@@ -9,6 +9,7 @@ public class BankAccount {
     private int accountNumber;
     private String accountType;
     private int balance;
+    private int overdraft;
 
     public BankAccount(String firstName, String lastName, LocalDate dateOfBirth, int accountNumber, String accountType) {
 
@@ -18,6 +19,7 @@ public class BankAccount {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = 0;
+        this.overdraft = -10000;
     }
 
     public String getFirstName() {
@@ -72,8 +74,11 @@ public class BankAccount {
         this.balance += amount;
     }
 
-    public void withdraw(double amount) {
-        this.balance -= amount;
+    public String withdraw(double amount) {
+        if (amount <= this.balance && this.balance >= this.overdraft) {
+            this.balance -= amount;
+            return "Withdrawal successful you have " + getBalance() + " remaining in your account";
+        } else return "You have insufficient funds to make this withdrawal";
     }
 
     public void payInterest(){
