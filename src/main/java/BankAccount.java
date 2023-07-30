@@ -1,8 +1,5 @@
-import org.apache.commons.math3.util.Precision;
-
 import java.time.LocalDate;
-
-import static java.math.RoundingMode.HALF_DOWN;
+import java.util.Objects;
 
 public class BankAccount {
 
@@ -10,16 +7,17 @@ public class BankAccount {
     private String lastName;
     private LocalDate dateOfBirth;
     private int accountNumber;
-    private double balance;
+    private String accountType;
+    private int balance;
 
-    public BankAccount(String firstName, String lastName, LocalDate dateOfBirth, int accountNumber, double balance) {
+    public BankAccount(String firstName, String lastName, LocalDate dateOfBirth, int accountNumber, String accountType) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.accountNumber = accountNumber;
-        this.balance = balance;
-
+        this.accountType = accountType;
+        this.balance = 0;
     }
 
     public String getFirstName() {
@@ -55,22 +53,35 @@ public class BankAccount {
     }
 
     public double getBalance() {
-        return this.balance;
+        return (double) this.balance / 100;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
-    public void deposit(double depositAmount) {
-        this.balance += depositAmount;
+    public String getAccountType() {
+        return this.accountType;
     }
 
-    public void withdraw(double withdrawAmount) {
-        this.balance -= withdrawAmount;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
-    public void payInterest(double interestPercentage){
-        this.balance *= (1 + (interestPercentage / 100));
+    public void deposit(double amount) {
+        this.balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        this.balance -= amount;
+    }
+
+    public void payInterest(){
+        if (Objects.equals(accountType, "Savings")) {
+            this.balance *= 1.04;
+        }
+        if (Objects.equals(accountType, "Current")) {
+            this.balance *= 1.01;
+        }
     }
 }
